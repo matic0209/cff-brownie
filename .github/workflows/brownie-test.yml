@@ -1,40 +1,45 @@
 # Uncomment to work with me!
 
-# on: ['push', 'pull_request']
+on: ['push', 'pull_request']
 
-# name: main workflow
+name: main workflow
 
-# env:
-#   NODE_OPTIONS: --max_old_space_size=4096
+env:
 
-# jobs:
-#   tests:
-#     runs-on: ubuntu-latest
+  ETHERSCAN_TOKEN: ${{ secrets.ETHERSCAN_TOKEN }}
+  WEB3_INFURA_PROJECT_ID: ${{ secrets.WEB3_INFURA_PROJECT_ID }}
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
-#     steps:
-#       - uses: actions/checkout@v2
+  NODE_OPTIONS: --max_old_space_size=4096
 
-#       - name: Cache Compiler Installations
-#         uses: actions/cache@v2
-#         with:
-#           path: |
-#             ~/.solcx
-#             ~/.vvm
-#           key: compiler-cache
+jobs:
+  tests:
+    runs-on: ubuntu-latest
 
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v1
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Install Ganache
-#         run: npm install -g ganache-cli@6.10.2
+      - name: Cache Compiler Installations
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.solcx
+            ~/.vvm
+          key: compiler-cache
 
-#       - name: Setup Python 3.8
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.8
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
 
-#       - name: Install Requirements
-#         run: pip install -r requirements.txt
+      - name: Install Ganache
+        run: npm install -g ganache-cli@6.10.2
 
-#       - name: Run Tests
-#         run: brownie test
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+
+      - name: Run Tests
+        run: brownie test
