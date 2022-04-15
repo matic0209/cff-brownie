@@ -1,7 +1,5 @@
 # Uncomment to work with me!
-
 on: ['push', 'pull_request']
-
 name: main workflow
 
 env:
